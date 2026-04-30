@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from services.usuarios_service import cadastrar_usuario
+from services.usuarios_service import cadastrar_usuario, logar_usuario
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -15,3 +15,15 @@ def cadastro():
         return resultado
 
     return render_template("cadastro.html")
+
+
+@auth_bp.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form["email"]
+        senha = request.form["senha"]
+
+        resultado = logar_usuario(email, senha)
+        return resultado
+
+    return render_template("login.html")

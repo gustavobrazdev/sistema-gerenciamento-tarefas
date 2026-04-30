@@ -21,3 +21,20 @@ def salvar_usuario(usuario):
 
     cursor.close()
     conexao.close()
+
+def buscar_usuario_email(email):
+    conexao = conexao_banco_dados()
+    cursor = conexao.cursor(dictionary=True)
+
+    sql = """
+        SELECT * FROM usuarios
+        WHERE email_usuario = %s
+    """
+
+    cursor.execute(sql, (email,))
+    usuario = cursor.fetchone()
+
+    cursor.close()
+    conexao.close()
+
+    return usuario

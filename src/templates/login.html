@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Gerenciador de Tarefas</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e293b, #2563eb);
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 45px;
+            padding: 30px;
+        }
+
+        .apresentacao {
+            max-width: 430px;
+            color: #ffffff;
+        }
+
+        .apresentacao h1 {
+            font-size: 42px;
+            margin-bottom: 16px;
+        }
+
+        .apresentacao p {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #e0f2fe;
+        }
+
+        .container {
+            width: 380px;
+            background-color: #ffffff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .titulo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .titulo h2 {
+            color: #1e293b;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .titulo p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .mensagem-info {
+            background-color: #eff6ff;
+            color: #1e40af;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .grupo-input {
+            margin-bottom: 18px;
+        }
+
+        .grupo-input label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        .grupo-input input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .grupo-input input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+        }
+
+        .aviso {
+            display: block;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        .rodape {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 800px) {
+            .page {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .apresentacao {
+                text-align: center;
+            }
+
+            .apresentacao h1 {
+                font-size: 32px;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 380px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="apresentacao">
+            <h1>Gerenciador de Tarefas</h1>
+            <p>
+                Organize suas tarefas, acompanhe prioridades e mantenha seu checklist sempre atualizado.
+                Faça login para acessar sua área de tarefas.
+            </p>
+        </section>
+
+        <div class="container">
+            <div class="titulo">
+                <h2>Login</h2>
+                <p>Acesse sua conta para gerenciar suas tarefas</p>
+            </div>
+
+            <div class="mensagem-info">
+                Acesse sua conta usando o e-mail e a senha cadastrados.
+            </div>
+
+            <form method="POST" action="/login">
+                <div class="grupo-input">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+                    <small class="aviso">
+                        Informe o e-mail utilizado no cadastro.
+                    </small>
+                </div>
+
+                <div class="grupo-input">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    <small class="aviso">
+                        Digite a senha cadastrada para acessar sua conta.
+                    </small>
+                </div>
+
+                <button type="submit">Entrar</button>
+            </form>
+
+            <p class="link">
+                Não tem uma conta?
+                <a href="/cadastro">Cadastre-se</a>
+            </p>
+
+            <p class="rodape">
+                Sistema de Gerenciamento de Checklist
+            </p>
+        </div>
+    </main>
+</body>
+</html>

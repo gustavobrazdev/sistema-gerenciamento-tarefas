@@ -46,3 +46,9 @@ def criptografar_senha(senha:str):
     senhaBytes = senha.encode('utf-8')
     senhaHash = bcrypt.hashpw(senhaBytes, bcrypt.gensalt())
     return senhaHash.decode('utf-8')
+
+def verificar_senha(senha_digitada: str, senha_hash: str):
+    senha_digitada_bytes = senha_digitada.encode("utf-8")
+    senha_hash_bytes = senha_hash.encode("utf-8")
+
+    return bcrypt.checkpw(senha_digitada_bytes, senha_hash_bytes)
