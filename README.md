@@ -39,6 +39,7 @@ A metodologia utilizada no projeto é baseada no Kanban.
 
 O quadro Kanban foi organizado no GitHub Projects com as seguintes colunas:
 
+- Backlog
 - A Fazer
 - Em Progresso
 - Concluído
@@ -140,11 +141,3 @@ Em desenvolvimento.
 
 Autor: Desenvolvido por Gustavo Braz para a disciplina de Engenharia de Software.
 
-
-Depois de colar e salvar, faça no terminal:
-
-```bash
-git status
-git add README.md
-git commit -m "docs: adiciona README inicial do projeto"
-git push
