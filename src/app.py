@@ -1,11 +1,14 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
+from routes.auth_routes import auth_bp
 
 app = Flask(__name__)
+
+app.register_blueprint(auth_bp)
 
 
 @app.route("/")
 def home():
-    return "Sistema de Gerenciamento de Checklist funcionando!"
+    return redirect(url_for("auth.cadastro"))
 
 
 if __name__ == "__main__":
