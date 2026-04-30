@@ -15,7 +15,7 @@ def validar_nome(nome:str):
         return None
     
 def validar_email(email:str):
-    email = email.strip()
+    email = email.strip().lower()
     padrao = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     
     if re.match(padrao, email):
@@ -43,6 +43,6 @@ def criptografar_senha(senha:str):
     if senhaValidada is None:
         return None
     
-    senha_bytes = senha.encode('utf-8')
-    senha_hash = bcrypt.hashpw(senha_bytes, bcrypt.gensalt())
-    return senha_hash.decode('utf-8')
+    senhaBytes = senha.encode('utf-8')
+    senhaHash = bcrypt.hashpw(senhaBytes, bcrypt.gensalt())
+    return senhaHash.decode('utf-8')
