@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu perfil | Checklist</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --azul-escuro: #0f172a;
+            --azul-card: #1e293b;
+            --azul-claro: #2563eb;
+            --azul-hover: #1d4ed8;
+            --verde: #10b981;
+            --laranja: #f59e0b;
+            --vermelho: #ef4444;
+            --texto-claro: #f1f5f9;
+            --texto-suave: #94a3b8;
+            --borda: rgba(255, 255, 255, 0.08);
+            --hover-bg: rgba(255, 255, 255, 0.04);
+        }
+
+        body {
+            background-color: var(--azul-escuro);
+            color: var(--texto-claro);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: #020617;
+            border-right: 1px solid var(--borda);
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            padding: 0 8px;
+        }
+
+        .logo-icone {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .menu-lateral {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .menu-lateral a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            color: var(--texto-suave);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .menu-lateral a:hover {
+            background: var(--hover-bg);
+            color: var(--texto-claro);
+        }
+
+        .menu-lateral a.ativo {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(16, 185, 129, 0.1));
+            color: var(--texto-claro);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+        }
+
+        .menu-lateral .icone {
+            font-size: 18px;
+        }
+
+        .perfil-rodape {
+            border-top: 1px solid var(--borda);
+            padding-top: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .perfil-info p:first-child {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .perfil-info p:last-child {
+            font-size: 12px;
+            color: var(--texto-suave);
+        }
+
+        .principal {
+            flex: 1;
+            padding: 36px 44px;
+            overflow-y: auto;
+        }
+
+        .topo {
+            margin-bottom: 32px;
+        }
+
+        .topo h1 {
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+
+        .topo p {
+            color: var(--texto-suave);
+            font-size: 14px;
+        }
+
+        .grid-perfil {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--azul-card);
+            border: 1px solid var(--borda);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .card .subtitulo {
+            color: var(--texto-suave);
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+        .avatar-grande {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            font-size: 38px;
+            margin: 0 auto 18px;
+        }
+
+        .info-resumo {
+            text-align: center;
+        }
+
+        .info-resumo .nome {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            word-break: break-word;
+        }
+
+        .info-resumo .email {
+            color: var(--texto-suave);
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .grupo-input {
+            margin-bottom: 18px;
+        }
+
+        .grupo-input label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--texto-suave);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .grupo-input input {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--azul-escuro);
+            border: 1px solid var(--borda);
+            color: var(--texto-claro);
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .grupo-input input:focus {
+            border-color: var(--azul-claro);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .aviso {
+            display: block;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        .btn-salvar {
+            padding: 12px 22px;
+            background: var(--azul-claro);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .btn-salvar:hover {
+            background: var(--azul-hover);
+            transform: translateY(-2px);
+        }
+
+        .alerta {
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.45;
+        }
+
+        .alerta-erro {
+            background-color: rgba(239, 68, 68, 0.12);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+        }
+
+        .alerta-sucesso {
+            background-color: rgba(16, 185, 129, 0.12);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+
+        .alerta .icone {
+            font-weight: bold;
+            font-size: 15px;
+            line-height: 1.2;
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .alerta-erro .icone {
+            background: rgba(239, 68, 68, 0.25);
+        }
+
+        .alerta-sucesso .icone {
+            background: rgba(16, 185, 129, 0.25);
+        }
+
+        .secao-divisor {
+            margin-top: 28px;
+            padding-top: 28px;
+            border-top: 1px solid var(--borda);
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 16px 20px;
+            }
+
+            .menu-lateral {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .perfil-rodape {
+                display: none;
+            }
+
+            .principal {
+                padding: 24px 20px;
+            }
+
+            .grid-perfil {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">
+        <div class="logo-icone">✓</div>
+        Checklist
+    </div>
+
+    <ul class="menu-lateral">
+        <li>
+            <a href="/tarefas">
+                <span class="icone">📊</span>
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="/perfil" class="ativo">
+                <span class="icone">👤</span>
+                Meu perfil
+            </a>
+        </li>
+        <li>
+            <a href="/logout">
+                <span class="icone">🚪</span>
+                Sair
+            </a>
+        </li>
+    </ul>
+
+    <a href="/perfil" class="perfil-rodape" style="text-decoration: none; color: inherit;">
+        <div class="avatar">{{ (session.nome_usuario[:1] | upper) if session.nome_usuario else 'U' }}</div>
+        <div class="perfil-info">
+            <p>{{ session.nome_usuario or 'Usuário' }}</p>
+            <p>{{ session.email_usuario or 'Conta ativa' }}</p>
+        </div>
+    </a>
+</aside>
+
+<main class="principal">
+    <div class="topo">
+        <h1>👤 Meu perfil</h1>
+        <p>Veja e atualize suas informações de conta.</p>
+    </div>
+
+    <div class="grid-perfil">
+
+        <div class="card info-resumo">
+            <div class="avatar-grande">
+                {{ (usuario.nome_usuario[:1] | upper) if usuario else 'U' }}
+            </div>
+            <div class="nome">{{ usuario.nome_usuario if usuario else '' }}</div>
+            <div class="email">{{ usuario.email_usuario if usuario else '' }}</div>
+        </div>
+
+        <div>
+            <div class="card">
+                <h2>Dados pessoais</h2>
+                <p class="subtitulo">Atualize seu nome e e-mail de acesso.</p>
+
+                {% if sucesso %}
+                <div class="alerta alerta-sucesso">
+                    <span class="icone">✓</span>
+                    <span>{{ sucesso }}</span>
+                </div>
+                {% endif %}
+
+                {% if erro %}
+                <div class="alerta alerta-erro">
+                    <span class="icone">!</span>
+                    <span>{{ erro }}</span>
+                </div>
+                {% endif %}
+
+                <form method="POST" action="/perfil">
+                    <div class="grupo-input">
+                        <label>Nome</label>
+                        <input type="text" name="nome"
+                               value="{{ usuario.nome_usuario if usuario else '' }}"
+                               required>
+                        <small class="aviso">Entre 4 e 100 caracteres.</small>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>E-mail</label>
+                        <input type="email" name="email"
+                               value="{{ usuario.email_usuario if usuario else '' }}"
+                               required>
+                    </div>
+
+                    <button type="submit" class="btn-salvar">Salvar alterações</button>
+                </form>
+            </div>
+
+            <div class="card secao-divisor" style="margin-top: 24px;">
+                <h2>🔒 Alterar senha</h2>
+                <p class="subtitulo">Use uma senha forte para manter sua conta segura.</p>
+
+                {% if sucesso_senha %}
+                <div class="alerta alerta-sucesso">
+                    <span class="icone">✓</span>
+                    <span>{{ sucesso_senha }}</span>
+                </div>
+                {% endif %}
+
+                {% if erro_senha %}
+                <div class="alerta alerta-erro">
+                    <span class="icone">!</span>
+                    <span>{{ erro_senha }}</span>
+                </div>
+                {% endif %}
+
+                <form method="POST" action="/perfil/senha">
+                    <div class="grupo-input">
+                        <label>Senha atual</label>
+                        <input type="password" name="senha_atual" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Nova senha</label>
+                        <input type="password" name="senha_nova" required>
+                        <small class="aviso">Mínimo 8 caracteres, com uma maiúscula, um número e um caractere especial.</small>
+                    </div>
+
+                    <button type="submit" class="btn-salvar">Alterar senha</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

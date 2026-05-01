@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 
 from services.tarefa_services import (
     cadastrar_tarefa,
@@ -12,9 +12,15 @@ from services.tarefa_services import (
 tarefa_bp = Blueprint("tarefa", __name__)
 
 
+def _id_usuario_logado():
+    return session.get("id_usuario")
+
+
 @tarefa_bp.route("/tarefas", methods=["GET", "POST"])
 def tarefas():
-    id_usuario = 1
+    id_usuario = _id_usuario_logado()
+    if id_usuario is None:
+        return redirect(url_for("auth.login"))
 
     if request.method == "POST":
         titulo = request.form["titulo"]
@@ -45,7 +51,9 @@ def tarefas():
 
 @tarefa_bp.route("/tarefas/editar/<int:id_tarefa>", methods=["GET", "POST"])
 def editar(id_tarefa):
-    id_usuario = 1
+    id_usuario = _id_usuario_logado()
+    if id_usuario is None:
+        return redirect(url_for("auth.login"))
 
     tarefa = buscar_tarefa_edicao(id_tarefa, id_usuario)
 
@@ -82,7 +90,9 @@ def editar(id_tarefa):
 
 @tarefa_bp.route("/tarefas/excluir/<int:id_tarefa>")
 def excluir(id_tarefa):
-    id_usuario = 1
+    id_usuario = _id_usuario_logado()
+    if id_usuario is None:
+        return redirect(url_for("auth.login"))
 
     remover_tarefa(id_tarefa, id_usuario)
 

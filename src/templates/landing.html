@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist | Organize sua rotina, conquiste seus dias</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --azul-escuro: #0f172a;
+            --azul-medio: #1e293b;
+            --azul-claro: #2563eb;
+            --azul-hover: #1d4ed8;
+            --verde: #10b981;
+            --laranja: #f59e0b;
+            --vermelho: #ef4444;
+            --texto-claro: #f1f5f9;
+            --texto-suave: #cbd5e1;
+            --cinza-card: rgba(255, 255, 255, 0.06);
+            --borda-card: rgba(255, 255, 255, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--azul-escuro);
+            color: var(--texto-claro);
+            overflow-x: hidden;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid var(--borda-card);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--texto-claro);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icone {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .menu {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .menu a {
+            color: var(--texto-suave);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .menu a:hover {
+            color: var(--azul-claro);
+        }
+
+        .botoes-nav {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-secundario {
+            padding: 10px 22px;
+            background: transparent;
+            color: var(--texto-claro);
+            border: 1px solid var(--borda-card);
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .btn-secundario:hover {
+            border-color: var(--azul-claro);
+            color: var(--azul-claro);
+        }
+
+        .btn-primario {
+            padding: 10px 22px;
+            background: var(--azul-claro);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .btn-primario:hover {
+            background: var(--azul-hover);
+            transform: translateY(-2px);
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            min-height: 100vh;
+            padding: 130px 50px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.25), transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero-conteudo {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.15);
+            color: #60a5fa;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 24px;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #60a5fa, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--texto-suave);
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
+
+        .hero-acoes {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        .btn-hero {
+            padding: 16px 32px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-hero.primario {
+            background: var(--azul-claro);
+            color: white;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-hero.primario:hover {
+            background: var(--azul-hover);
+            transform: translateY(-3px);
+        }
+
+        .btn-hero.secundario {
+            background: transparent;
+            color: var(--texto-claro);
+            border: 1px solid var(--borda-card);
+        }
+
+        .btn-hero.secundario:hover {
+            border-color: var(--azul-claro);
+        }
+
+        .estatisticas-hero {
+            display: flex;
+            gap: 40px;
+        }
+
+        .estatistica-item h3 {
+            font-size: 28px;
+            color: var(--azul-claro);
+            margin-bottom: 4px;
+        }
+
+        .estatistica-item p {
+            font-size: 13px;
+            color: var(--texto-suave);
+            margin: 0;
+        }
+
+        /* ---------- HERO MOCKUP (estilo dashboard) ---------- */
+        .hero-mockup {
+            flex: 1;
+            max-width: 560px;
+        }
+
+        .mockup-card {
+            background: #1e293b;
+            border: 1px solid var(--borda-card);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .mockup-titulo {
+            font-size: 13px;
+            color: var(--texto-suave);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mockup-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .mockup-stat {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--borda-card);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mockup-stat-label {
+            font-size: 11px;
+            color: var(--texto-suave);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 4px;
+        }
+
+        .mockup-stat-valor {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .mockup-stat-icone {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .mockup-stat-icone.azul { background: rgba(37, 99, 235, 0.15); color: #60a5fa; }
+        .mockup-stat-icone.laranja { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .mockup-stat-icone.roxo { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+        .mockup-stat-icone.verde { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+
+        .mockup-tarefa {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--borda-card);
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mockup-tarefa::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--azul-claro);
+        }
+
+        .mockup-tarefa.alta::before { background: var(--vermelho); }
+        .mockup-tarefa.media::before { background: var(--laranja); }
+        .mockup-tarefa.baixa::before { background: var(--azul-claro); }
+
+        .mockup-tarefa-titulo {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .mockup-tarefa-meta {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .mockup-badge {
+            font-size: 10px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-alta {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+
+        .badge-media {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fcd34d;
+        }
+
+        .badge-baixa {
+            background: rgba(37, 99, 235, 0.15);
+            color: #93c5fd;
+        }
+
+        .badge-pendente {
+            background: rgba(148, 163, 184, 0.15);
+            color: #cbd5e1;
+        }
+
+        .badge-progresso {
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+        }
+
+        .badge-concluida {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+        }
+
+        /* ---------- SEÇÕES GERAIS ---------- */
+        section {
+            padding: 100px 50px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .titulo-secao {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .titulo-secao .tag {
+            display: inline-block;
+            color: #60a5fa;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .titulo-secao h2 {
+            font-size: 42px;
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+
+        .titulo-secao p {
+            font-size: 17px;
+            color: var(--texto-suave);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ---------- BENEFÍCIOS ---------- */
+        .beneficios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .beneficio-card {
+            background: var(--cinza-card);
+            border: 1px solid var(--borda-card);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .beneficio-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--azul-claro);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .beneficio-icone {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        .beneficio-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .beneficio-card p {
+            color: var(--texto-suave);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* ---------- COMO FUNCIONA ---------- */
+        .passos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            position: relative;
+        }
+
+        .passo-card {
+            text-align: center;
+            padding: 28px;
+            position: relative;
+        }
+
+        .passo-numero {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .passo-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .passo-card p {
+            color: var(--texto-suave);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ---------- POR QUE USAR ---------- */
+        .por-que {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(16, 185, 129, 0.05));
+            border: 1px solid var(--borda-card);
+            border-radius: 24px;
+            padding: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .por-que h2 {
+            font-size: 38px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .por-que > div > p {
+            color: var(--texto-suave);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .lista-beneficios {
+            list-style: none;
+        }
+
+        .lista-beneficios li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            font-size: 15px;
+            color: var(--texto-suave);
+        }
+
+        .lista-beneficios li::before {
+            content: "✓";
+            background: var(--verde);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        /* ---------- CTA FINAL ---------- */
+        .cta-final {
+            text-align: center;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border-radius: 24px;
+            padding: 70px 40px;
+            margin: 50px 50px 100px;
+        }
+
+        .cta-final h2 {
+            font-size: 40px;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .cta-final p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 32px;
+        }
+
+        .cta-final .btn-hero {
+            background: white;
+            color: var(--azul-claro);
+        }
+
+        .cta-final .btn-hero:hover {
+            background: #f8fafc;
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            background: #020617;
+            padding: 40px 50px;
+            text-align: center;
+            color: var(--texto-suave);
+            font-size: 14px;
+            border-top: 1px solid var(--borda-card);
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        /* ---------- RESPONSIVO ---------- */
+        @media (max-width: 900px) {
+            .navbar {
+                padding: 16px 20px;
+            }
+
+            .menu {
+                display: none;
+            }
+
+            .hero {
+                flex-direction: column;
+                padding: 110px 20px 50px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero-acoes {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .estatisticas-hero {
+                justify-content: center;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .titulo-secao h2 {
+                font-size: 30px;
+            }
+
+            .por-que {
+                grid-template-columns: 1fr;
+                padding: 40px 24px;
+            }
+
+            .cta-final {
+                margin: 30px 20px 60px;
+                padding: 50px 24px;
+            }
+
+            .cta-final h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============== NAVBAR ============== -->
+<nav class="navbar">
+    <div class="logo">
+        <div class="logo-icone">✓</div>
+        Checklist
+    </div>
+
+    <ul class="menu">
+        <li><a href="#beneficios">Benefícios</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#por-que">Por que usar</a></li>
+    </ul>
+
+    <div class="botoes-nav">
+        <a href="/login" class="btn-secundario">Entrar</a>
+        <a href="/cadastro" class="btn-primario">Começar grátis</a>
+    </div>
+</nav>
+
+<!-- ============== HERO ============== -->
+<header class="hero">
+    <div class="hero-conteudo">
+        <span class="hero-tag">✨ Organize sua rotina de forma simples</span>
+        <h1>Transforme o caos em <span>produtividade</span> com seu checklist pessoal</h1>
+        <p>
+            Cansado de esquecer compromissos, perder prazos e sentir que o dia escapa pelas suas mãos?
+            O Checklist é o sistema feito para colocar ordem no seu dia, organizar prioridades
+            e dar a você o controle total da sua rotina.
+        </p>
+
+        <div class="hero-acoes">
+            <a href="/cadastro" class="btn-hero primario">Criar conta grátis →</a>
+            <a href="#como-funciona" class="btn-hero secundario">Ver como funciona</a>
+        </div>
+
+        <div class="estatisticas-hero">
+            <div class="estatistica-item">
+                <h3>100%</h3>
+                <p>Gratuito</p>
+            </div>
+            <div class="estatistica-item">
+                <h3>3 níveis</h3>
+                <p>De prioridade</p>
+            </div>
+            <div class="estatistica-item">
+                <h3>Fácil</h3>
+                <p>De usar</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-mockup">
+        <div class="mockup-card">
+            <div class="mockup-titulo">📊 Dashboard</div>
+
+            <div class="mockup-stats">
+                <div class="mockup-stat">
+                    <div>
+                        <div class="mockup-stat-label">Total</div>
+                        <div class="mockup-stat-valor">12</div>
+                    </div>
+                    <div class="mockup-stat-icone azul">📋</div>
+                </div>
+                <div class="mockup-stat">
+                    <div>
+                        <div class="mockup-stat-label">Pendentes</div>
+                        <div class="mockup-stat-valor">4</div>
+                    </div>
+                    <div class="mockup-stat-icone laranja">⏳</div>
+                </div>
+                <div class="mockup-stat">
+                    <div>
+                        <div class="mockup-stat-label">Em progresso</div>
+                        <div class="mockup-stat-valor">3</div>
+                    </div>
+                    <div class="mockup-stat-icone roxo">🔄</div>
+                </div>
+                <div class="mockup-stat">
+                    <div>
+                        <div class="mockup-stat-label">Concluídas</div>
+                        <div class="mockup-stat-valor">5</div>
+                    </div>
+                    <div class="mockup-stat-icone verde">✅</div>
+                </div>
+            </div>
+
+            <div class="mockup-tarefa alta">
+                <div class="mockup-tarefa-titulo">Entregar relatório do projeto</div>
+                <div class="mockup-tarefa-meta">
+                    <span class="mockup-badge badge-alta">🔥 Alta</span>
+                    <span class="mockup-badge badge-progresso">Em progresso</span>
+                </div>
+            </div>
+
+            <div class="mockup-tarefa media">
+                <div class="mockup-tarefa-titulo">Estudar para a prova de Engenharia</div>
+                <div class="mockup-tarefa-meta">
+                    <span class="mockup-badge badge-media">⚡ Média</span>
+                    <span class="mockup-badge badge-pendente">Pendente</span>
+                </div>
+            </div>
+
+            <div class="mockup-tarefa baixa">
+                <div class="mockup-tarefa-titulo">Reunião de alinhamento da equipe</div>
+                <div class="mockup-tarefa-meta">
+                    <span class="mockup-badge badge-baixa">🌱 Baixa</span>
+                    <span class="mockup-badge badge-concluida">Concluída</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<!-- ============== BENEFÍCIOS ============== -->
+<section id="beneficios">
+    <div class="titulo-secao">
+        <span class="tag">Funcionalidades</span>
+        <h2>Tudo que você precisa em um só lugar</h2>
+        <p>Recursos pensados para quem quer simplicidade na hora de organizar a rotina, sem deixar de lado o controle.</p>
+    </div>
+
+    <div class="beneficios">
+        <div class="beneficio-card">
+            <div class="beneficio-icone">📋</div>
+            <h3>Cadastro completo de tarefas</h3>
+            <p>Crie tarefas com título, descrição, prazo, prioridade e status. Tudo num formulário simples e rápido de preencher.</p>
+        </div>
+
+        <div class="beneficio-card">
+            <div class="beneficio-icone">🎯</div>
+            <h3>Prioridades visuais</h3>
+            <p>Defina o que é urgente, o que pode esperar e o que é rotina. As prioridades ficam visíveis em cores para você bater o olho e saber o que fazer.</p>
+        </div>
+
+        <div class="beneficio-card">
+            <div class="beneficio-icone">📊</div>
+            <h3>Dashboard intuitivo</h3>
+            <p>Veja em tempo real quantas tarefas estão pendentes, em progresso e concluídas. Tudo no painel principal, sem precisar contar no dedo.</p>
+        </div>
+
+        <div class="beneficio-card">
+            <div class="beneficio-icone">🔒</div>
+            <h3>Conta segura e individual</h3>
+            <p>Suas tarefas são suas. Cadastro com senha forte e validação de dados garantem que só você acessa sua área.</p>
+        </div>
+
+        <div class="beneficio-card">
+            <div class="beneficio-icone">⚡</div>
+            <h3>Edição rápida</h3>
+            <p>Mudou de ideia? Edite ou exclua qualquer tarefa em poucos cliques. Sua rotina muda, seu checklist acompanha.</p>
+        </div>
+
+        <div class="beneficio-card">
+            <div class="beneficio-icone">📅</div>
+            <h3>Controle de prazos</h3>
+            <p>Cada tarefa pode ter um prazo definido. Você nunca mais perde uma data importante por esquecimento.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============== COMO FUNCIONA ============== -->
+<section id="como-funciona">
+    <div class="titulo-secao">
+        <span class="tag">Simples assim</span>
+        <h2>Comece em 3 passos</h2>
+        <p>Sem cadastros longos, sem complicação. Em menos de 1 minuto você já está organizando sua rotina.</p>
+    </div>
+
+    <div class="passos">
+        <div class="passo-card">
+            <div class="passo-numero">1</div>
+            <h3>Crie sua conta</h3>
+            <p>Cadastre-se em segundos com nome, e-mail e uma senha segura. É grátis e leva menos de 30 segundos.</p>
+        </div>
+
+        <div class="passo-card">
+            <div class="passo-numero">2</div>
+            <h3>Adicione suas tarefas</h3>
+            <p>Cadastre tudo que precisa fazer com prazo, prioridade e status. Você decide o nível de detalhe que cabe na sua rotina.</p>
+        </div>
+
+        <div class="passo-card">
+            <div class="passo-numero">3</div>
+            <h3>Acompanhe e conclua</h3>
+            <p>Visualize, edite e marque tarefas como concluídas. Veja seu progresso direto no dashboard e tenha clareza do dia.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============== POR QUE USAR ============== -->
+<section id="por-que">
+    <div class="por-que">
+        <div>
+            <h2>Por que usar o <span style="color: #60a5fa;">Checklist</span>?</h2>
+            <p>
+                Porque a vida moderna não dá pausa. Entre estudo, trabalho, projetos pessoais
+                e compromissos do dia a dia, é fácil deixar algo passar.
+                O Checklist nasceu pra ser o seu segundo cérebro digital: confiável, leve e direto ao ponto.
+            </p>
+            <a href="/cadastro" class="btn-hero primario">Quero começar agora →</a>
+        </div>
+
+        <ul class="lista-beneficios">
+            <li>Reduz o estresse de tentar lembrar de tudo de cabeça</li>
+            <li>Aumenta sua produtividade ao tornar o dia mais previsível</li>
+            <li>Te dá clareza sobre o que é importante e o que pode esperar</li>
+            <li>Evita prazos perdidos com controle visual de datas</li>
+            <li>Funciona pra estudo, trabalho, projetos e vida pessoal</li>
+            <li>Interface limpa, sem propaganda e sem distrações</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ============== CTA FINAL ============== -->
+<div class="cta-final">
+    <h2>Pronto para tomar o controle do seu tempo?</h2>
+    <p>Crie sua conta gratuita e tenha o seu checklist pessoal em menos de 1 minuto.</p>
+    <a href="/cadastro" class="btn-hero primario">Criar minha conta grátis</a>
+</div>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+    <p><strong>Checklist</strong> — Sistema de Gerenciamento de Tarefas</p>
+    <p>Desenvolvido por Gustavo Braz • Disciplina de Engenharia de Software</p>
+</footer>
+
+</body>
+</html>

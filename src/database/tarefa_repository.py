@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 from database.conexao import conexao_banco_dados
 
 
@@ -44,6 +46,17 @@ def listar_tarefas(id_usuario):
 
     cursor.close()
     conexao.close()
+
+    hoje = date.today()
+    for tarefa in tarefas:
+        prazo = tarefa.get("prazo_tarefa")
+        if isinstance(prazo, datetime):
+            prazo = prazo.date()
+        if prazo and prazo < hoje and tarefa["status_tarefa"] != "concluida":
+            tarefa["status_tarefa"] = "pendente"
+            tarefa["prazo_vencido"] = True
+        else:
+            tarefa["prazo_vencido"] = False
 
     return tarefas
 

@@ -3,141 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro | Gerenciador de Tarefas</title>
+    <title>Criar conta | Checklist</title>
 
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --azul-escuro: #0f172a;
+            --azul-medio: #1e293b;
+            --azul-claro: #2563eb;
+            --azul-hover: #1d4ed8;
+            --verde: #10b981;
+            --vermelho: #ef4444;
+            --texto-claro: #f1f5f9;
+            --texto-suave: #cbd5e1;
+            --cinza-card: rgba(255, 255, 255, 0.06);
+            --borda-card: rgba(255, 255, 255, 0.1);
         }
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            background-color: var(--azul-escuro);
+            color: var(--texto-claro);
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .page {
-            min-height: 100vh;
+        body::before {
+            content: "";
+            position: fixed;
+            top: -150px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.25), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            bottom: -150px;
+            right: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.18), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .topo {
+            position: relative;
+            z-index: 2;
+            padding: 24px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--texto-claro);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icone {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 45px;
-            padding: 30px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .voltar {
+            color: var(--texto-suave);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .voltar:hover {
+            color: #60a5fa;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 86px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            padding: 30px 50px 50px;
         }
 
         .apresentacao {
-            max-width: 430px;
-            color: #ffffff;
+            max-width: 460px;
+        }
+
+        .apresentacao .tag {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
         .apresentacao h1 {
-            font-size: 42px;
-            margin-bottom: 16px;
+            font-size: 44px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .apresentacao h1 span {
+            background: linear-gradient(135deg, #60a5fa, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .apresentacao p {
-            font-size: 17px;
-            line-height: 1.6;
-            color: #ccfbf1;
+            font-size: 16px;
+            color: var(--texto-suave);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .apresentacao ul {
+            list-style: none;
+        }
+
+        .apresentacao ul li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 15px;
+            color: var(--texto-suave);
+        }
+
+        .apresentacao ul li::before {
+            content: "✓";
+            background: var(--verde);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 13px;
         }
 
         .container {
-            width: 380px;
-            background-color: #ffffff;
-            padding: 35px;
+            width: 410px;
+            background: var(--cinza-card);
+            border: 1px solid var(--borda-card);
+            padding: 36px;
             border-radius: 16px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
         }
 
         .titulo {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .titulo h2 {
-            color: #0f766e;
+            color: var(--texto-claro);
             font-size: 28px;
             margin-bottom: 8px;
+            font-weight: 800;
         }
 
         .titulo p {
-            color: #64748b;
+            color: var(--texto-suave);
             font-size: 14px;
         }
 
-        .mensagem-info {
-            background-color: #ecfdf5;
-            color: #047857;
-            padding: 10px;
-            border-radius: 8px;
+        .alerta {
+            padding: 12px 14px;
+            border-radius: 10px;
             font-size: 13px;
             margin-bottom: 18px;
-            text-align: center;
-            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.45;
+        }
+
+        .alerta-erro {
+            background-color: rgba(239, 68, 68, 0.12);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+        }
+
+        .alerta .icone {
+            font-weight: bold;
+            font-size: 15px;
+            line-height: 1.2;
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(239, 68, 68, 0.25);
         }
 
         .grupo-input {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .grupo-input label {
             display: block;
             margin-bottom: 6px;
             font-weight: bold;
-            color: #334155;
+            color: var(--texto-claro);
             font-size: 14px;
         }
 
         .grupo-input input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
+            padding: 12px 14px;
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--borda-card);
             border-radius: 10px;
             outline: none;
             font-size: 14px;
+            color: var(--texto-claro);
+            transition: all 0.2s;
+        }
+
+        .grupo-input input::placeholder {
+            color: #64748b;
         }
 
         .grupo-input input:focus {
-            border-color: #14b8a6;
-            box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.15);
+            border-color: var(--azul-claro);
+            background-color: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
         }
 
         .aviso {
             display: block;
             margin-top: 6px;
             font-size: 12px;
-            color: #64748b;
+            color: #94a3b8;
             line-height: 1.4;
         }
 
-        button {
+        button[type="submit"] {
             width: 100%;
-            padding: 12px;
-            background-color: #14b8a6;
+            padding: 13px;
+            background: var(--azul-claro);
             color: #ffffff;
             border: none;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 8px;
+            margin-top: 10px;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+            transition: all 0.2s;
         }
 
-        button:hover {
-            background-color: #0f766e;
+        button[type="submit"]:hover {
+            background: var(--azul-hover);
+            transform: translateY(-2px);
         }
 
         .link {
             text-align: center;
-            margin-top: 18px;
+            margin-top: 20px;
             font-size: 14px;
-            color: #475569;
+            color: var(--texto-suave);
         }
 
         .link a {
-            color: #0f766e;
+            color: #60a5fa;
             text-decoration: none;
             font-weight: bold;
         }
@@ -148,15 +318,24 @@
 
         .rodape {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 16px;
             font-size: 12px;
-            color: #94a3b8;
+            color: #64748b;
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
+            .topo {
+                padding: 16px 20px;
+            }
+
+            .voltar {
+                display: none;
+            }
+
             .page {
                 flex-direction: column;
-                gap: 25px;
+                padding: 20px;
+                gap: 30px;
             }
 
             .apresentacao {
@@ -167,59 +346,76 @@
                 font-size: 32px;
             }
 
+            .apresentacao ul {
+                display: inline-block;
+                text-align: left;
+            }
+
             .container {
                 width: 100%;
-                max-width: 380px;
+                max-width: 410px;
+                padding: 28px;
             }
         }
     </style>
 </head>
 <body>
+    <header class="topo">
+        <a href="/" class="logo">
+            <div class="logo-icone">✓</div>
+            Checklist
+        </a>
+        <a href="/" class="voltar">← Voltar para a página inicial</a>
+    </header>
+
     <main class="page">
         <section class="apresentacao">
-            <h1>Gerenciador de Tarefas</h1>
+            <span class="tag">🚀 Comece em segundos</span>
+            <h1>Crie sua conta e organize sua <span>rotina</span></h1>
             <p>
-                Crie sua conta para cadastrar, visualizar, editar e organizar suas tarefas por status e prioridade.
-                Comece criando seu acesso ao sistema.
+                Cadastre-se grátis e tenha acesso ao seu checklist pessoal.
+                Cadastre tarefas, defina prioridades e veja seu progresso em tempo real.
             </p>
+            <ul>
+                <li>100% gratuito, sem cobrança escondida</li>
+                <li>Cadastro em menos de 30 segundos</li>
+                <li>Seus dados ficam seguros e privados</li>
+            </ul>
         </section>
 
         <div class="container">
             <div class="titulo">
-                <h2>Cadastro</h2>
-                <p>Crie sua conta para começar a organizar suas tarefas</p>
+                <h2>Criar conta</h2>
+                <p>Preencha os dados para começar a organizar suas tarefas</p>
             </div>
 
-            <div class="mensagem-info">
-                Preencha os dados abaixo para criar sua conta de acesso ao sistema.
+            {% if erro %}
+            <div class="alerta alerta-erro">
+                <span class="icone">!</span>
+                <span>{{ erro }}</span>
             </div>
+            {% endif %}
 
             <form method="POST" action="/cadastro">
                 <div class="grupo-input">
                     <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
-                    <small class="aviso">
-                        Informe seu nome. Tem que possuir pelo menos 4 caracteres.
-                    </small>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome" value="{{ nome or '' }}" required>
+                    <small class="aviso">Deve ter pelo menos 4 caracteres.</small>
                 </div>
 
                 <div class="grupo-input">
                     <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="seuemail@provedor.com" required>
-                    <small class="aviso">
-                        Informe o seu próprio e-mail. Exemplo de formato: seuemail@provedor.com
-                    </small>
+                    <input type="email" id="email" name="email" placeholder="seuemail@provedor.com" value="{{ email or '' }}" required>
+                    <small class="aviso">Use um e-mail válido — você usará para entrar na sua conta.</small>
                 </div>
 
                 <div class="grupo-input">
                     <label for="senha">Senha</label>
                     <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
-                    <small class="aviso">
-                        A senha deve ter no mínimo 8 caracteres, uma letra maiúscula, um número e um caractere especial.
-                    </small>
+                    <small class="aviso">Mínimo 8 caracteres, com uma letra maiúscula, um número e um caractere especial.</small>
                 </div>
 
-                <button type="submit">Cadastrar</button>
+                <button type="submit">Criar minha conta grátis</button>
             </form>
 
             <p class="link">
