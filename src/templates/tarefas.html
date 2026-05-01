@@ -3,64 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <title>Tarefas | Gerenciador de Tarefas</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f5f9;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #1e293b;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            font-weight: bold;
+            color: #334155;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .cancelar {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .tarefa {
+            background: white;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .tarefa strong {
+            font-size: 18px;
+            color: #1e293b;
+        }
+
+        .acoes {
+            margin-top: 12px;
+        }
+
+        .acoes a {
+            margin-right: 12px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .editar {
+            color: #2563eb;
+        }
+
+        .excluir {
+            color: #dc2626;
+        }
+
+        .vazio {
+            text-align: center;
+            color: #64748b;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Minhas Tarefas</h1>
 
-    <form method="POST" action="/tarefas">
-        <label>Título</label>
-        <input type="text" name="titulo" placeholder="Digite o título da tarefa" required>
+<div class="container">
 
-        <label>Descrição</label>
-        <input type="text" name="descricao" placeholder="Digite a descrição da tarefa">
+    <h1>Gerenciador de Tarefas</h1>
 
-        <label>Prioridade</label>
-        <select name="prioridade">
-            <option value="baixa">Baixa</option>
-            <option value="media">Média</option>
-            <option value="alta">Alta</option>
-        </select>
+    {% if tarefa_edicao %}
+        <h2>Editar Tarefa</h2>
 
-        <label>Status</label>
-        <select name="status">
-            <option value="pendente">Pendente</option>
-            <option value="em_progresso">Em progresso</option>
-            <option value="concluida">Concluída</option>
-        </select>
+        <form method="POST" action="/tarefas/editar/{{ tarefa_edicao.id_tarefa }}">
+            <label>Título</label>
+            <input type="text" name="titulo" value="{{ tarefa_edicao.titulo_tarefa }}" required>
 
-        <label>Prazo</label>
-        <input type="date" name="prazo">
+            <label>Descrição</label>
+            <input type="text" name="descricao" value="{{ tarefa_edicao.descricao_tarefa }}">
 
-        <button type="submit">Adicionar tarefa</button>
-    </form>
+            <label>Prioridade</label>
+            <select name="prioridade">
+                <option value="baixa" {% if tarefa_edicao.prioridade_tarefa == "baixa" %}selected{% endif %}>Baixa</option>
+                <option value="media" {% if tarefa_edicao.prioridade_tarefa == "media" %}selected{% endif %}>Média</option>
+                <option value="alta" {% if tarefa_edicao.prioridade_tarefa == "alta" %}selected{% endif %}>Alta</option>
+            </select>
 
-    <hr>
+            <label>Status</label>
+            <select name="status">
+                <option value="pendente" {% if tarefa_edicao.status_tarefa == "pendente" %}selected{% endif %}>Pendente</option>
+                <option value="em_progresso" {% if tarefa_edicao.status_tarefa == "em_progresso" %}selected{% endif %}>Em progresso</option>
+                <option value="concluida" {% if tarefa_edicao.status_tarefa == "concluida" %}selected{% endif %}>Concluída</option>
+            </select>
+
+            <label>Prazo</label>
+            <input type="date" name="prazo" value="{{ tarefa_edicao.prazo_tarefa }}">
+
+            <button type="submit">Salvar alterações</button>
+
+            <a class="cancelar" href="/tarefas">Cancelar edição</a>
+        </form>
+
+    {% else %}
+        <h2>Nova Tarefa</h2>
+
+        <form method="POST" action="/tarefas">
+            <label>Título</label>
+            <input type="text" name="titulo" placeholder="Digite o título da tarefa" required>
+
+            <label>Descrição</label>
+            <input type="text" name="descricao" placeholder="Digite a descrição da tarefa">
+
+            <label>Prioridade</label>
+            <select name="prioridade">
+                <option value="baixa">Baixa</option>
+                <option value="media">Média</option>
+                <option value="alta">Alta</option>
+            </select>
+
+            <label>Status</label>
+            <select name="status">
+                <option value="pendente">Pendente</option>
+                <option value="em_progresso">Em progresso</option>
+                <option value="concluida">Concluída</option>
+            </select>
+
+            <label>Prazo</label>
+            <input type="date" name="prazo">
+
+            <button type="submit">Adicionar tarefa</button>
+        </form>
+    {% endif %}
 
     <h2>Tarefas cadastradas</h2>
 
     {% if tarefas %}
-        <ul>
-            {% for tarefa in tarefas %}
-                <li>
-                    <strong>{{ tarefa.titulo_tarefa }}</strong>
-                    <br>
-                    Descrição: {{ tarefa.descricao_tarefa }}
-                    <br>
-                    Prioridade: {{ tarefa.prioridade_tarefa }}
-                    <br>
-                    Status: {{ tarefa.status_tarefa }}
-                    <br>
-                    Data de criação: {{ tarefa.data_criacao }}
-                    <br>
-                    Prazo: {{ tarefa.prazo_tarefa }}
-                    <br>
-                    <a href="/tarefas/excluir/{{ tarefa.id_tarefa }}">Excluir</a>
-                </li>
-                <hr>
-            {% endfor %}
-        </ul>
+        {% for tarefa in tarefas %}
+            <div class="tarefa">
+                <strong>{{ tarefa.titulo_tarefa }}</strong>
+
+                <p><b>Descrição:</b> {{ tarefa.descricao_tarefa }}</p>
+                <p><b>Prioridade:</b> {{ tarefa.prioridade_tarefa }}</p>
+                <p><b>Status:</b> {{ tarefa.status_tarefa }}</p>
+                <p><b>Data de criação:</b> {{ tarefa.data_criacao }}</p>
+                <p><b>Prazo:</b> {{ tarefa.prazo_tarefa }}</p>
+
+                <div class="acoes">
+                    <a class="editar" href="/tarefas/editar/{{ tarefa.id_tarefa }}">Editar</a>
+                    <a class="excluir" href="/tarefas/excluir/{{ tarefa.id_tarefa }}">Excluir</a>
+                </div>
+            </div>
+        {% endfor %}
     {% else %}
-        <p>Nenhuma tarefa cadastrada.</p>
+        <p class="vazio">Nenhuma tarefa cadastrada.</p>
     {% endif %}
+
+</div>
+
 </body>
 </html>

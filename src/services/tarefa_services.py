@@ -6,12 +6,16 @@ from validators.tarefa_validator import (
     validar_prioridade,
     validar_status,
     validar_prazo
+
 )
 
 from database.tarefa_repository import (
     salvar_tarefa,
     listar_tarefas,
-    excluir_tarefa
+    excluir_tarefa,
+    buscar_tarefa_id,
+    atualizar_tarefa
+
 )
 
 
@@ -58,3 +62,41 @@ def buscar_tarefas_usuario(id_usuario):
 def remover_tarefa(id_tarefa, id_usuario):
     excluir_tarefa(id_tarefa, id_usuario)
     return "Tarefa excluída com sucesso!"
+
+def buscar_tarefa_edicao(id_tarefa, id_usuario):
+    return buscar_tarefa_id(id_tarefa, id_usuario)
+
+def editar_tarefa(id_tarefa, titulo, descricao, prioridade, status, prazo, id_usuario):
+    titulo_validado = validar_titulo(titulo)
+    descricao_validada = validar_descricao(descricao)
+    prioridade_validada = validar_prioridade(prioridade)
+    status_validado = validar_status(status)
+    prazo_validado = validar_prazo(prazo)
+
+    if titulo_validado is None:
+        return "Título inválido."
+
+    if descricao_validada is None:
+        return "Descrição inválida."
+
+    if prioridade_validada is None:
+        return "Prioridade inválida."
+
+    if status_validado is None:
+        return "Status inválido."
+
+    if prazo and prazo_validado is None:
+        return "Prazo inválido."
+
+    tarefa = Tarefa(
+        titulo_validado,
+        descricao_validada,
+        prioridade_validada,
+        status_validado,
+        prazo_validado,
+        id_usuario
+    )
+
+    atualizar_tarefa(tarefa, id_tarefa)
+
+    return "Tarefa atualizada com sucesso!"
