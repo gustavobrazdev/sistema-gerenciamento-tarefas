@@ -7,17 +7,15 @@ def validar_titulo(titulo: str):
 
     titulo = titulo.strip()
 
-    if len(titulo) >= 3 or len(titulo) <= 100:
+    if len(titulo) < 3 or len(titulo) > 100:
         return None
 
-    return titulo.capitalize()
+    return titulo
 
 
 def validar_descricao(descricao: str):
-    descricao.replace("", " ")
-
     if not descricao:
-        return None
+        return ""
 
     descricao = descricao.strip()
 

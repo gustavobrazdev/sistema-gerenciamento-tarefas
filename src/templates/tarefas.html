@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Tarefas | Gerenciador de Tarefas</title>
+</head>
+<body>
+    <h1>Minhas Tarefas</h1>
+
+    <form method="POST" action="/tarefas">
+        <label>Título</label>
+        <input type="text" name="titulo" placeholder="Digite o título da tarefa" required>
+
+        <label>Descrição</label>
+        <input type="text" name="descricao" placeholder="Digite a descrição da tarefa">
+
+        <label>Prioridade</label>
+        <select name="prioridade">
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+        </select>
+
+        <label>Status</label>
+        <select name="status">
+            <option value="pendente">Pendente</option>
+            <option value="em_progresso">Em progresso</option>
+            <option value="concluida">Concluída</option>
+        </select>
+
+        <label>Prazo</label>
+        <input type="date" name="prazo">
+
+        <button type="submit">Adicionar tarefa</button>
+    </form>
+
+    <hr>
+
+    <h2>Tarefas cadastradas</h2>
+
+    {% if tarefas %}
+        <ul>
+            {% for tarefa in tarefas %}
+                <li>
+                    <strong>{{ tarefa.titulo_tarefa }}</strong>
+                    <br>
+                    Descrição: {{ tarefa.descricao_tarefa }}
+                    <br>
+                    Prioridade: {{ tarefa.prioridade_tarefa }}
+                    <br>
+                    Status: {{ tarefa.status_tarefa }}
+                    <br>
+                    Data de criação: {{ tarefa.data_criacao }}
+                    <br>
+                    Prazo: {{ tarefa.prazo_tarefa }}
+                    <br>
+                    <a href="/tarefas/excluir/{{ tarefa.id_tarefa }}">Excluir</a>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhuma tarefa cadastrada.</p>
+    {% endif %}
+</body>
+</html>

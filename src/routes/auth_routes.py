@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request
 from services.usuarios_service import cadastrar_usuario, logar_usuario
+from flask import Blueprint, render_template, request, redirect, url_for
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -24,6 +24,11 @@ def login():
         senha = request.form["senha"]
 
         resultado = logar_usuario(email, senha)
+
+        if resultado == "Login realizado com sucesso!":
+            return redirect(url_for("tarefa.tarefas"))
+
         return resultado
 
     return render_template("login.html")
+    
